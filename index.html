@@ -1,0 +1,412 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>EpiOps™ Workshops &amp; Training | Public Health Data Modernization Training</title>
+  <meta name="description" content="EpiOps™ Workshops & Training: hands-on training in public health data modernization for epidemiologists, informaticists, and health department teams. Led by Sai Kurmana, MPH, MS, CPHIMS.">
+  <meta name="author" content="Sai Kurmana">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="EpiOps™ Workshops & Training">
+  <meta property="og:description" content="Hands-on training in public health data modernization for epidemiologists, informaticists, and health department teams.">
+  <meta name="theme-color" content="#0f2a44">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230f2a44'/%3E%3Cpath d='M12 36h10l5-12 8 22 6-14h11' fill='none' stroke='%2334c3b5' stroke-width='5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "EducationalOrganization",
+    "name": "EpiOps™ Workshops & Training",
+    "description": "Hands-on training in public health data modernization for epidemiologists, informaticists, and health department teams.",
+    "founder": { "@type": "Person", "name": "Sai Kurmana", "honorificSuffix": "MPH, MS, CPHIMS" },
+    "hasOfferCatalog": {
+      "@type": "OfferCatalog",
+      "name": "EpiOps™ Training Services",
+      "itemListElement": [
+        { "@type": "Course", "name": "EpiOps™ Workshop: Building Automated Ingestion Pipelines", "provider": { "@type": "Person", "name": "Sai Kurmana" } },
+        { "@type": "Course", "name": "EpiOps™ Workshop: The Transformation Engine (dbt + Airflow)", "provider": { "@type": "Person", "name": "Sai Kurmana" } },
+        { "@type": "Course", "name": "EpiOps™ Live Webinar: From Framework to Practice", "provider": { "@type": "Person", "name": "Sai Kurmana" } }
+      ]
+    }
+  }
+  </script>
+
+  <style>
+    :root {
+      --navy: #0f2a44;
+      --navy-2: #173a5c;
+      --teal: #0b7a75;
+      --teal-dark: #08615d;
+      --teal-bright: #34c3b5;
+      --ink: #1b2733;
+      --muted: #52606d;
+      --line: #dde3ea;
+      --bg: #ffffff;
+      --bg-soft: #f4f7f9;
+      --radius: 14px;
+      --shadow: 0 1px 2px rgba(15, 42, 68, .06), 0 8px 24px rgba(15, 42, 68, .08);
+      --serif: "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;
+      --sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      --wrap: 1120px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+    @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+    body {
+      margin: 0;
+      font-family: var(--sans);
+      font-size: 17px;
+      line-height: 1.6;
+      color: var(--ink);
+      background: var(--bg);
+    }
+    img { max-width: 100%; display: block; }
+    a { color: var(--teal); }
+    a:hover { color: var(--teal-dark); }
+    :focus-visible { outline: 3px solid var(--teal-bright); outline-offset: 3px; border-radius: 4px; }
+
+    .wrap { max-width: var(--wrap); margin: 0 auto; padding: 0 20px; }
+    .skip { position: absolute; left: -9999px; top: 0; background: #fff; padding: 8px 12px; z-index: 100; }
+    .skip:focus { left: 12px; top: 12px; }
+
+    h1, h2, h3 { font-family: var(--serif); color: var(--navy); line-height: 1.2; margin: 0 0 .5em; }
+    h1 { font-size: clamp(2.2rem, 5.5vw, 3.6rem); letter-spacing: -.01em; }
+    h2 { font-size: clamp(1.7rem, 3.5vw, 2.3rem); }
+    h3 { font-size: 1.3rem; }
+    p { margin: 0 0 1em; }
+    .tm { font-size: .55em; vertical-align: super; line-height: 0; margin-left: .04em; font-family: var(--sans); font-weight: 600; }
+
+    .eyebrow {
+      display: inline-block;
+      font-size: .78rem;
+      font-weight: 700;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--teal);
+      margin-bottom: .9rem;
+    }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: .5em;
+      padding: .8em 1.4em;
+      font: 600 1rem/1.2 var(--sans);
+      border-radius: 10px;
+      text-decoration: none;
+      border: 2px solid transparent;
+      transition: background-color .15s ease, color .15s ease, border-color .15s ease;
+      cursor: pointer;
+    }
+    .btn-primary { background: var(--teal); color: #fff; }
+    .btn-primary:hover { background: var(--teal-dark); color: #fff; }
+    .btn-ghost { border-color: rgba(255,255,255,.55); color: #fff; }
+    .btn-ghost:hover { background: rgba(255,255,255,.1); color: #fff; }
+    .btn-block { width: 100%; }
+
+    /* Header */
+    .site-header {
+      position: sticky; top: 0; z-index: 50;
+      background: rgba(255,255,255,.96);
+      border-bottom: 1px solid var(--line);
+      backdrop-filter: saturate(1.4) blur(6px);
+    }
+    .site-header .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; min-height: 64px; }
+    .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--navy); }
+    .brand svg { flex: none; }
+    .brand-name { font-family: var(--serif); font-weight: 700; font-size: 1.2rem; line-height: 1.1; }
+    .brand-sub { display: block; font-family: var(--sans); font-size: .72rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+    .nav { display: flex; align-items: center; gap: 22px; }
+    .nav a { color: var(--ink); text-decoration: none; font-weight: 500; font-size: .95rem; }
+    .nav a:hover { color: var(--teal); }
+    .nav .btn { padding: .55em 1em; font-size: .9rem; color: #fff; white-space: nowrap; }
+    @media (max-width: 760px) { .nav a:not(.btn) { display: none; } }
+
+    /* Hero */
+    .hero {
+      background:
+        radial-gradient(1000px 420px at 85% -10%, rgba(52,195,181,.22), transparent 60%),
+        linear-gradient(160deg, var(--navy) 0%, var(--navy-2) 100%);
+      color: #e8eef4;
+      padding: clamp(56px, 9vw, 104px) 0 clamp(56px, 8vw, 96px);
+    }
+    .hero-grid { display: grid; grid-template-columns: 1.35fr 1fr; gap: 48px; align-items: center; }
+    .hero h1 { color: #fff; }
+    .hero .eyebrow { color: var(--teal-bright); }
+    .hero .lede { font-size: clamp(1.1rem, 2.1vw, 1.3rem); color: #d3dde7; max-width: 38em; margin-bottom: 1.6em; }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; }
+    .hero-card {
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.16);
+      border-radius: var(--radius);
+      padding: 26px 26px 10px;
+    }
+    .hero-card h2 { font-family: var(--sans); font-size: .8rem; letter-spacing: .12em; text-transform: uppercase; color: var(--teal-bright); margin-bottom: 14px; }
+    .facts { list-style: none; margin: 0; padding: 0; }
+    .facts li { padding: 12px 0; border-top: 1px solid rgba(255,255,255,.12); }
+    .facts li:first-child { border-top: 0; padding-top: 0; }
+    .facts strong { display: block; color: #fff; font-weight: 600; }
+    .facts span { color: #c2cfdb; font-size: .95rem; }
+    @media (max-width: 880px) { .hero-grid { grid-template-columns: 1fr; gap: 36px; } }
+
+    /* Sections */
+    section { padding: clamp(56px, 8vw, 88px) 0; }
+    .section-soft { background: var(--bg-soft); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+    .section-head { max-width: 720px; margin-bottom: 40px; }
+    .section-head p { color: var(--muted); font-size: 1.08rem; }
+
+    /* Workshops */
+    .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+    @media (max-width: 980px) { .cards { grid-template-columns: 1fr; max-width: 640px; } }
+    .card {
+      display: flex; flex-direction: column;
+      background: #fff;
+      border: 1px solid var(--line);
+      border-top: 4px solid var(--teal);
+      border-radius: var(--radius);
+      padding: 28px 26px 26px;
+      box-shadow: var(--shadow);
+    }
+    .card.webinar { border-top-color: var(--navy); }
+    .tag {
+      align-self: flex-start;
+      font-size: .74rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase;
+      color: var(--teal-dark); background: #e3f4f2;
+      padding: 4px 10px; border-radius: 999px; margin-bottom: 14px;
+    }
+    .card.webinar .tag { color: var(--navy); background: #e4ebf3; }
+    .card h3 { font-size: 1.32rem; }
+    .card h3 .series { display: block; font-family: var(--sans); font-size: .82rem; font-weight: 700; letter-spacing: .04em; color: var(--teal-dark); margin-bottom: 6px; }
+    .card.webinar h3 .series { color: var(--navy-2); }
+    .card p { color: var(--muted); }
+    .card ul { margin: 0 0 1.2em; padding-left: 1.15em; color: var(--ink); font-size: .96rem; }
+    .card li { margin-bottom: .35em; }
+    .meta { display: flex; flex-wrap: wrap; gap: 8px 16px; font-size: .88rem; color: var(--muted); border-top: 1px solid var(--line); padding-top: 14px; margin: auto 0 18px; }
+    .meta b { color: var(--ink); font-weight: 600; }
+
+    /* Approach */
+    .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; counter-reset: step; }
+    @media (max-width: 860px) { .steps { grid-template-columns: 1fr; } }
+    .step { position: relative; padding-left: 58px; }
+    .step::before {
+      counter-increment: step; content: counter(step);
+      position: absolute; left: 0; top: 0;
+      width: 40px; height: 40px; border-radius: 50%;
+      display: grid; place-items: center;
+      background: var(--navy); color: #fff; font-weight: 700;
+    }
+    .step h3 { font-size: 1.15rem; margin-bottom: .35em; }
+    .step p { color: var(--muted); margin: 0; }
+
+    /* Team banner */
+    .team {
+      display: grid; grid-template-columns: 1.5fr auto; gap: 24px; align-items: center;
+      background: var(--navy); color: #d3dde7;
+      border-radius: var(--radius);
+      padding: clamp(28px, 4vw, 44px);
+      margin-top: 56px;
+    }
+    .team h2 { color: #fff; font-size: clamp(1.4rem, 2.8vw, 1.8rem); }
+    .team p { margin: 0; }
+    @media (max-width: 760px) { .team { grid-template-columns: 1fr; } }
+
+    /* Instructor */
+    .instructor { display: grid; grid-template-columns: 220px 1fr; gap: 44px; align-items: start; }
+    @media (max-width: 760px) { .instructor { grid-template-columns: 1fr; gap: 24px; } }
+    .avatar {
+      width: 200px; height: 200px; border-radius: 50%;
+      display: grid; place-items: center;
+      background: linear-gradient(145deg, var(--teal), var(--navy));
+      color: #fff; font-family: var(--serif); font-size: 4rem; font-weight: 700;
+      box-shadow: var(--shadow);
+    }
+    @media (max-width: 760px) { .avatar { width: 140px; height: 140px; font-size: 2.8rem; } }
+    .creds { color: var(--teal-dark); font-weight: 600; margin-bottom: 1.1em; }
+    .focus-list { display: flex; flex-wrap: wrap; gap: 8px; list-style: none; padding: 0; margin: 1.2em 0 0; }
+    .focus-list li { background: var(--bg-soft); border: 1px solid var(--line); border-radius: 999px; padding: 5px 12px; font-size: .88rem; color: var(--ink); }
+
+    /* Contact */
+    .contact { text-align: center; }
+    .contact .section-head { margin-left: auto; margin-right: auto; }
+
+    /* Footer */
+    .site-footer { background: #0b1f33; color: #a9b8c7; padding: 40px 0; font-size: .92rem; }
+    .site-footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 18px; }
+    .site-footer a { color: #d3dde7; }
+    .site-footer p { margin: 0 0 .4em; }
+    .site-footer .fname { color: #fff; font-weight: 600; }
+  </style>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="#top" aria-label="EpiOps™ Workshops &amp; Training — home">
+        <svg width="36" height="36" viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="14" fill="#0f2a44"/><path d="M12 36h10l5-12 8 22 6-14h11" fill="none" stroke="#34c3b5" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span class="brand-name">EpiOps™<span class="brand-sub">Workshops &amp; Training</span></span>
+      </a>
+      <nav class="nav" aria-label="Primary">
+        <a href="#workshops">Workshops</a>
+        <a href="#approach">Approach</a>
+        <a href="#instructor">Instructor</a>
+        <a class="btn btn-primary" href="#contact">Register interest</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <!-- HERO -->
+    <div class="hero" id="top">
+      <div class="wrap hero-grid">
+        <div>
+          <span class="eyebrow">Professional training · Public health data modernization</span>
+          <h1>EpiOps<span class="tm">™</span> Workshops &amp; Training</h1>
+          <p class="lede">Hands-on training in public health data modernization for epidemiologists, informaticists, and health department teams.</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#workshops">View workshops</a>
+            <a class="btn btn-ghost" href="mailto:sai.kurmana+epiops@gmail.com?subject=EpiOps%E2%84%A2%20Training%20%E2%80%94%20Register%20interest">Register interest</a>
+          </div>
+        </div>
+        <aside class="hero-card" aria-labelledby="facts-title">
+          <h2 id="facts-title">EpiOps™ Training at a glance</h2>
+          <ul class="facts">
+            <li><strong>Who it’s for</strong><span>Epidemiologists, informaticists, data analysts, and health department IT &amp; surveillance teams</span></li>
+            <li><strong>Formats</strong><span>Live virtual workshops, live webinars, and private on-site sessions for agencies</span></li>
+            <li><strong>Teaching style</strong><span>Instructor-led, hands-on labs built on realistic, synthetic surveillance data</span></li>
+            <li><strong>Instructor</strong><span>Sai Kurmana, MPH, MS, CPHIMS</span></li>
+          </ul>
+        </aside>
+      </div>
+    </div>
+
+    <!-- WORKSHOPS -->
+    <section id="workshops" aria-labelledby="workshops-title">
+      <div class="wrap">
+        <div class="section-head">
+          <span class="eyebrow">Workshops</span>
+          <h2 id="workshops-title">EpiOps™ training offerings</h2>
+          <p>Each EpiOps™ session is taught live and built around practical exercises, so participants leave with working skills they can apply in their own health department.</p>
+        </div>
+
+        <div class="cards">
+          <article class="card" aria-labelledby="w1">
+            <span class="tag">Workshop</span>
+            <h3 id="w1"><span class="series">EpiOps™ Workshop:</span>Building Automated Ingestion Pipelines</h3>
+            <p>Replace manual downloads and copy-paste with reliable, scheduled ingestion of surveillance data feeds.</p>
+            <ul>
+              <li>Landing lab, case, and syndromic feeds (CSV, HL7 v2, FHIR) into a raw layer</li>
+              <li>Validation checks, logging, and safe re-runs</li>
+              <li>Scheduling and alerting when a feed is late or malformed</li>
+            </ul>
+            <div class="meta"><span><b>Format:</b> Live, hands-on · Half-day (4 hours)</span><span><b>Delivery:</b> Virtual or on-site</span></div>
+            <a class="btn btn-primary btn-block" href="mailto:sai.kurmana+epiops@gmail.com?subject=Register%20interest%3A%20EpiOps%E2%84%A2%20Workshop%20%E2%80%94%20Building%20Automated%20Ingestion%20Pipelines">Register interest</a>
+          </article>
+
+          <article class="card" aria-labelledby="w2">
+            <span class="tag">Workshop</span>
+            <h3 id="w2"><span class="series">EpiOps™ Workshop:</span>The Transformation Engine (dbt + Airflow)</h3>
+            <p>Turn raw surveillance data into tested, documented, analysis-ready tables, orchestrated end to end.</p>
+            <ul>
+              <li>Modeling case and lab data with dbt: staging, marts, and tests</li>
+              <li>Orchestrating daily runs and dependencies with Apache Airflow</li>
+              <li>Auto-generated documentation and lineage for your team</li>
+            </ul>
+            <div class="meta"><span><b>Format:</b> Live, hands-on · Half-day (4 hours)</span><span><b>Delivery:</b> Virtual or on-site</span></div>
+            <a class="btn btn-primary btn-block" href="mailto:sai.kurmana+epiops@gmail.com?subject=Register%20interest%3A%20EpiOps%E2%84%A2%20Workshop%20%E2%80%94%20The%20Transformation%20Engine%20(dbt%20%2B%20Airflow)">Register interest</a>
+          </article>
+
+          <article class="card webinar" aria-labelledby="w3">
+            <span class="tag">Live Webinar</span>
+            <h3 id="w3"><span class="series">EpiOps™ Live Webinar:</span>From Framework to Practice</h3>
+            <p>A live, interactive session for program leaders and analysts planning their agency’s next steps in data modernization.</p>
+            <ul>
+              <li>Where manual surveillance workflows break down, and why</li>
+              <li>A practical roadmap from spreadsheets to automated pipelines</li>
+              <li>Live Q&amp;A on staffing, tooling, and getting started</li>
+            </ul>
+            <div class="meta"><span><b>Format:</b> Live webinar with Q&amp;A · 90&nbsp;minutes</span><span><b>Delivery:</b> Virtual</span></div>
+            <a class="btn btn-primary btn-block" href="mailto:sai.kurmana+epiops@gmail.com?subject=Register%20interest%3A%20EpiOps%E2%84%A2%20Live%20Webinar%20%E2%80%94%20From%20Framework%20to%20Practice">Register interest</a>
+          </article>
+        </div>
+
+        <div class="team">
+          <div>
+            <h2>Private EpiOps™ Training for your health department</h2>
+            <p>Any EpiOps™ workshop can be delivered privately to your team, tailored to your data sources, systems, and priorities.</p>
+          </div>
+          <a class="btn btn-primary" href="mailto:sai.kurmana+epiops@gmail.com?subject=Register%20interest%3A%20Private%20EpiOps%E2%84%A2%20Training%20for%20our%20team">Request team training</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- APPROACH -->
+    <section id="approach" class="section-soft" aria-labelledby="approach-title">
+      <div class="wrap">
+        <div class="section-head">
+          <span class="eyebrow">How EpiOps™ Training works</span>
+          <h2 id="approach-title">Built for practitioners, taught by a practitioner</h2>
+          <p>Every session is designed around the realities of public health work: limited staff, legacy systems, and data that has to be right.</p>
+        </div>
+        <div class="steps">
+          <div class="step">
+            <h3>Learn the pattern</h3>
+            <p>Short, focused instruction on the concept and why it matters for surveillance and reporting.</p>
+          </div>
+          <div class="step">
+            <h3>Build it hands-on</h3>
+            <p>Guided labs using realistic, synthetic public health data, with no real patient information required.</p>
+          </div>
+          <div class="step">
+            <h3>Take it back to work</h3>
+            <p>Leave with reusable templates, checklists, and a plan for applying it in your own agency.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- INSTRUCTOR -->
+    <section id="instructor" aria-labelledby="instructor-title">
+      <div class="wrap instructor">
+        <div class="avatar" aria-hidden="true">SK</div>
+        <div>
+          <span class="eyebrow">About the instructor</span>
+          <h2 id="instructor-title">Sai Kurmana</h2>
+          <p class="creds">MPH, MS, CPHIMS · Founder &amp; Lead Instructor, EpiOps™ Workshops &amp; Training</p>
+          <p>Sai Kurmana, MPH, MS, CPHIMS, is a healthcare data executive and former Director of Health Surveillance and Research at a state health department, where he led data modernization initiatives supporting $31.5M in federal chronic disease programs. He created EpiOps™ Workshops &amp; Training to teach health department teams how to build modern, sustainable public health data infrastructure.</p>
+          <ul class="focus-list" aria-label="Areas of focus">
+            <li>Public health surveillance</li>
+            <li>Health informatics</li>
+            <li>Data engineering</li>
+            <li>Data modernization</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" class="section-soft contact" aria-labelledby="contact-title">
+      <div class="wrap">
+        <div class="section-head">
+          <span class="eyebrow">Register interest</span>
+          <h2 id="contact-title">Join an EpiOps™ session</h2>
+          <p>Tell us which workshop you’re interested in, your role, and your organization. We’ll follow up with session dates, pricing, and registration details.</p>
+        </div>
+        <a class="btn btn-primary" href="mailto:sai.kurmana+epiops@gmail.com?subject=EpiOps%E2%84%A2%20Training%20%E2%80%94%20Register%20interest">Email to register interest</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <div>
+        <p class="fname">EpiOps™ Workshops &amp; Training</p>
+        <p>EpiOps™ is a trademark of Sai Kurmana. © 2026 Sai Kurmana. All rights reserved.</p>
+      </div>
+      <div>
+        <p><a href="#workshops">Workshops</a> · <a href="#instructor">Instructor</a> · <a href="#contact">Contact</a></p>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
