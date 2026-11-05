@@ -14,8 +14,6 @@ That's it. The workflow in [`.github/workflows/pages.yml`](.github/workflows/pag
 
 ## Before using the page as a trademark specimen
 
-- **Replace the email placeholder.** Every “Register interest” button is a `mailto:training@example.com` link. Find-and-replace `training@example.com` in `index.html` with your real address.
-- **Finalize the instructor bio.** The bio paragraphs are marked with a `BIO PLACEHOLDER` comment.
 - **Capture the specimen** from the live URL, with the URL and access date visible in the screenshot.
 
 ## Preview locally
